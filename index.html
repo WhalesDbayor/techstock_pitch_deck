@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TechStock — Investor Pitch Deck 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0d14;
+    --bg2: #0f1320;
+    --card: #151b2d;
+    --card2: #1a2238;
+    --border: rgba(255,255,255,0.08);
+    --accent: #3b82f6;
+    --accent2: #6366f1;
+    --accent3: #10b981;
+    --accent4: #f59e0b;
+    --text: #f0f4ff;
+    --muted: #8892a4;
+    --gradient: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%);
+    --gradient2: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+    --glow: 0 0 60px rgba(59,130,246,0.15);
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+  }
+
+  /* ── LUCIDE ICONS ── */
+  i[data-lucide] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+  /* icon-box icons */
+  .icon-box i[data-lucide] { width: 22px; height: 22px; stroke-width: 1.75; }
+  .icon-box.blue  i[data-lucide] { stroke: #60a5fa; }
+  .icon-box.green i[data-lucide] { stroke: #34d399; }
+  .icon-box.orange i[data-lucide] { stroke: #fbbf24; }
+  .icon-box.purple i[data-lucide] { stroke: #a78bfa; }
+  .icon-box.red   i[data-lucide] { stroke: #f87171; }
+  .icon-box.indigo i[data-lucide] { stroke: #818cf8; }
+  /* logo icon */
+  .logo-icon i[data-lucide] { width: 30px; height: 30px; stroke: white; stroke-width: 1.5; }
+  /* stat pill icons */
+  .stat-pill i[data-lucide] { width: 13px; height: 13px; stroke: #93c5fd; stroke-width: 2.5; margin-right: 2px; }
+  /* traction row icons */
+  .traction-icon i[data-lucide] { width: 20px; height: 20px; stroke: var(--accent); stroke-width: 1.75; }
+  /* tech tag icons */
+  .tech-tag i[data-lucide] { width: 14px; height: 14px; stroke: var(--muted); stroke-width: 2; }
+  /* CTA button icons */
+  .cta-btn i[data-lucide] { width: 16px; height: 16px; stroke: white; stroke-width: 2.25; margin-right: 7px; display: inline-flex; vertical-align: middle; }
+  .cta-btn-outline i[data-lucide] { width: 16px; height: 16px; stroke: var(--text); stroke-width: 2.25; margin-right: 7px; display: inline-flex; vertical-align: middle; }
+
+  /* ── PROGRESS BAR ── */
+  #progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: var(--gradient);
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+    z-index: 100;
+    box-shadow: 0 0 10px rgba(99,102,241,0.6);
+  }
+
+  /* ── NAV DOTS ── */
+  #nav-dots {
+    position: fixed;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+  }
+  .dot.active {
+    background: var(--accent);
+    box-shadow: 0 0 8px rgba(59,130,246,0.6);
+    transform: scale(1.3);
+  }
+
+  /* ── SLIDE CONTROLS ── */
+  #controls {
+    position: fixed;
+    bottom: 28px; left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    z-index: 100;
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    padding: 10px 24px;
+  }
+  #controls button {
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+  #controls button:hover { background: rgba(255,255,255,0.08); }
+  #slide-counter {
+    font-size: 13px;
+    color: var(--muted);
+    min-width: 60px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── SLIDES CONTAINER ── */
+  #deck {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 80px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s cubic-bezier(0.4,0,0.2,1), transform 0.6s cubic-bezier(0.4,0,0.2,1);
+    transform: translateX(60px);
+    overflow: hidden;
+  }
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateX(0);
+  }
+  .slide.exit {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+
+  .slide::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+    top: -200px; right: -200px;
+    pointer-events: none;
+  }
+  .slide::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%);
+    bottom: -100px; left: -100px;
+    pointer-events: none;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .slide-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  h1.hero-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(48px, 7vw, 84px);
+    font-weight: 700;
+    line-height: 1.05;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  h2.slide-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  h2.slide-title .accent { color: var(--accent); }
+  .slide-subtitle {
+    font-size: clamp(14px, 1.6vw, 18px);
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 680px;
+  }
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 22px);
+    color: var(--muted);
+    max-width: 600px;
+    text-align: center;
+    margin-top: 20px;
+    line-height: 1.6;
+  }
+
+  .gradient-line {
+    width: 60px; height: 3px;
+    background: var(--gradient);
+    border-radius: 2px;
+    margin: 16px 0 28px;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .card:hover { border-color: rgba(59,130,246,0.3); transform: translateY(-2px); }
+  .card-title { font-weight: 700; font-size: 15px; margin-bottom: 8px; }
+  .card-body { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+
+  /* ── STAT PILLS ── */
+  .stat-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(59,130,246,0.12);
+    border: 1px solid rgba(59,130,246,0.25);
+    border-radius: 40px;
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #93c5fd;
+  }
+
+  /* ── GRIDS ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; width: 100%; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; width: 100%; }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge-blue   { background: rgba(59,130,246,0.15);  color: #93c5fd;  border: 1px solid rgba(59,130,246,0.3); }
+  .badge-green  { background: rgba(16,185,129,0.15);  color: #6ee7b7;  border: 1px solid rgba(16,185,129,0.3); }
+  .badge-gold   { background: rgba(245,158,11,0.15);  color: #fcd34d;  border: 1px solid rgba(245,158,11,0.3); }
+  .badge-purple { background: rgba(139,92,246,0.15);  color: #c4b5fd;  border: 1px solid rgba(139,92,246,0.3); }
+
+  /* ── BIG STAT NUMBERS ── */
+  .stat-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 6px; font-weight: 500; }
+
+  /* ── FEATURE LIST ── */
+  .feature-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .feature-list li {
+    display: flex; align-items: flex-start; gap: 12px;
+    font-size: 14px; line-height: 1.5;
+  }
+  .check {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--gradient2);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .check svg { width: 10px; height: 10px; }
+  .check-x {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: rgba(239,68,68,0.15);
+    border: 1px solid rgba(239,68,68,0.25);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .check-x svg { width: 10px; height: 10px; }
+
+  /* ── ICON BOX ── */
+  .icon-box {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 14px; flex-shrink: 0;
+  }
+  .icon-box.blue   { background: rgba(59,130,246,0.12); }
+  .icon-box.green  { background: rgba(16,185,129,0.12); }
+  .icon-box.orange { background: rgba(245,158,11,0.12); }
+  .icon-box.purple { background: rgba(139,92,246,0.12); }
+  .icon-box.red    { background: rgba(239,68,68,0.12); }
+  .icon-box.indigo { background: rgba(99,102,241,0.12); }
+
+  /* ── PRICING TABLE ── */
+  .pricing-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 30px 24px;
+    text-align: center;
+    display: flex; flex-direction: column; gap: 12px;
+    position: relative;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .pricing-card.featured {
+    border-color: var(--accent);
+    background: linear-gradient(160deg, rgba(59,130,246,0.08) 0%, var(--card) 60%);
+    box-shadow: 0 0 40px rgba(59,130,246,0.12);
+  }
+  .pricing-price { font-family: 'Space Grotesk', sans-serif; font-size: 34px; font-weight: 800; color: var(--text); }
+  .pricing-price sup { font-size: 16px; vertical-align: super; }
+  .pricing-period { font-size: 13px; color: var(--muted); margin-top: -8px; }
+  .pricing-features { list-style: none; text-align: left; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+  .pricing-features li { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .pricing-features li .pf-check {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: rgba(16,185,129,0.15);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .pricing-features li .pf-check svg { width: 8px; height: 8px; }
+
+  /* ── ROADMAP ── */
+  .roadmap-track {
+    display: flex; gap: 0; width: 100%;
+    position: relative; align-items: flex-start;
+  }
+  .roadmap-track::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 22px;
+    height: 2px;
+    background: var(--border);
+  }
+  .roadmap-item {
+    flex: 1; text-align: center;
+    position: relative; padding-top: 48px;
+  }
+  .roadmap-dot {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    z-index: 1;
+  }
+  .roadmap-dot svg { width: 18px; height: 18px; }
+  .roadmap-dot.done   { background: var(--gradient2); box-shadow: 0 0 20px rgba(16,185,129,0.4); }
+  .roadmap-dot.active { background: var(--gradient);  box-shadow: 0 0 20px rgba(59,130,246,0.5); }
+  .roadmap-dot.next   { background: var(--card2); border: 2px solid var(--border); }
+  .roadmap-dot.done svg   { stroke: white; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+  .roadmap-dot.active svg { stroke: white; stroke-width: 2;   stroke-linecap: round; stroke-linejoin: round; fill: none; }
+  .roadmap-dot.next svg   { stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+  .roadmap-label { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .roadmap-sub   { font-size: 11px; color: var(--muted); line-height: 1.5; padding: 0 8px; }
+
+  /* ── PROBLEM SLIDE ── */
+  .problem-stat { text-align: center; padding: 24px 16px; }
+  .problem-num { font-family: 'Space Grotesk', sans-serif; font-size: 48px; font-weight: 800; color: #f87171; }
+  .problem-desc { font-size: 13px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+
+  /* ── TECH TAG ── */
+  .tech-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 10px 16px;
+    font-size: 13px; font-weight: 600;
+  }
+
+  /* ── CTA SLIDE ── */
+  .cta-btn {
+    display: inline-flex; align-items: center;
+    padding: 16px 40px;
+    border-radius: 14px;
+    font-weight: 700; font-size: 15px;
+    background: var(--gradient);
+    color: white; text-decoration: none;
+    border: none; cursor: pointer;
+    box-shadow: 0 8px 32px rgba(59,130,246,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 16px;
+  }
+  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(59,130,246,0.5); }
+  .cta-btn-outline {
+    display: inline-flex; align-items: center;
+    padding: 16px 40px;
+    border-radius: 14px;
+    font-weight: 600; font-size: 15px;
+    background: transparent; color: var(--text);
+    text-decoration: none;
+    border: 1px solid var(--border); cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    margin-top: 16px;
+  }
+  .cta-btn-outline:hover { border-color: var(--accent); background: rgba(59,130,246,0.06); }
+
+  .hr { width: 100%; height: 1px; background: var(--border); margin: 16px 0; }
+
+  .quote-block {
+    background: var(--card2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    font-size: 14px; color: var(--muted);
+    font-style: italic; line-height: 1.6;
+  }
+
+  /* ── COVER ── */
+  #slide-1 { background: var(--bg); text-align: center; }
+  .logo-mark {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px; font-weight: 700; margin-bottom: 32px;
+  }
+  .logo-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: var(--gradient);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 30px rgba(59,130,246,0.4);
+  }
+  .hero-tagline {
+    font-size: clamp(13px, 1.4vw, 16px);
+    color: var(--muted); margin-top: 12px; letter-spacing: 0.5px;
+  }
+  .pill-row {
+    display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+    margin-top: 36px;
+  }
+
+  .two-col { display: flex; gap: 60px; width: 100%; align-items: flex-start; }
+  .two-col .left { flex: 1; }
+  .two-col .right { flex: 1; }
+
+  .market-bar { width: 100%; height: 10px; border-radius: 5px; background: var(--card2); margin-top: 6px; overflow: hidden; }
+  .market-bar-fill { height: 100%; border-radius: 5px; background: var(--gradient); transition: width 1.5s cubic-bezier(0.4,0,0.2,1); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .slide.active > * { animation: fadeUp 0.5s ease both; }
+  .slide.active > *:nth-child(1) { animation-delay: 0.05s; }
+  .slide.active > *:nth-child(2) { animation-delay: 0.12s; }
+  .slide.active > *:nth-child(3) { animation-delay: 0.19s; }
+  .slide.active > *:nth-child(4) { animation-delay: 0.26s; }
+  .slide.active > *:nth-child(5) { animation-delay: 0.33s; }
+  .slide.active > *:nth-child(6) { animation-delay: 0.40s; }
+
+  ::-webkit-scrollbar { display: none; }
+
+  .traction-row {
+    display: flex; align-items: center; gap: 16px;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 20px;
+  }
+  .traction-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: rgba(59,130,246,0.1);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .traction-text { font-size: 14px; line-height: 1.5; }
+  .traction-text strong { color: var(--text); }
+
+  .why-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px;
+  }
+  .why-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 36px; font-weight: 800;
+    background: var(--gradient);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1; flex-shrink: 0; width: 36px;
+  }
+
+  .slide-num {
+    position: absolute; bottom: 72px; left: 80px;
+    font-size: 11px; color: rgba(255,255,255,0.15);
+    font-variant-numeric: tabular-nums; letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<div id="nav-dots"></div>
+
+<!-- SVG check / x helpers used inline -->
+<svg style="display:none">
+  <symbol id="ic-check" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="20 6 9 17 4 12"></polyline>
+  </symbol>
+  <symbol id="ic-x" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"></line>
+    <line x1="6" y1="6" x2="18" y2="18"></line>
+  </symbol>
+  <symbol id="ic-check-rd" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="20 6 9 17 4 12"></polyline>
+  </symbol>
+</svg>
+
+<div id="deck">
+
+  <!-- ═══════ SLIDE 1 — COVER ═══════ -->
+  <div class="slide" id="slide-1">
+    <div class="logo-mark">
+      <div class="logo-icon">
+        <i data-lucide="package"></i>
+      </div>
+      TechStock
+    </div>
+    <h1 class="hero-title">Inventory. Sales.<br/>Total Business Control.</h1>
+    <p class="hero-sub">
+      The all-in-one inventory &amp; sales management platform built exclusively<br/>for Nigerian tech retail businesses.
+    </p>
+    <div class="pill-row">
+      <span class="stat-pill"><i data-lucide="map-pin"></i> Built for Nigeria</span>
+      <span class="stat-pill"><i data-lucide="trending-up"></i> 7+ Businesses Live</span>
+      <span class="stat-pill"><i data-lucide="layers"></i> MERN Stack SaaS</span>
+      <span class="stat-pill"><i data-lucide="bar-chart-2"></i> Full Finance Intelligence</span>
+    </div>
+    <p class="hero-tagline" style="margin-top:48px;">Investor Pitch · June 2026</p>
+    <div class="slide-num">01 / 12</div>
+  </div>
+
+  <!-- ═══════ SLIDE 2 — PROBLEM ═══════ -->
+  <div class="slide" id="slide-2">
+    <span class="slide-label">The Problem</span>
+    <h2 class="slide-title">Nigerian Tech Retailers Are <span class="accent">Flying Blind</span></h2>
+    <div class="gradient-line"></div>
+
+    <div class="grid-3" style="margin-top:8px;">
+      <div class="card problem-stat">
+        <div class="problem-num">70%+</div>
+        <div class="problem-desc">of SME tech retailers still track inventory in notebooks or basic Excel spreadsheets</div>
+      </div>
+      <div class="card problem-stat">
+        <div class="problem-num">₦M+</div>
+        <div class="problem-desc">lost annually per business from stock theft, miscounted items, and untracked debts</div>
+      </div>
+      <div class="card problem-stat">
+        <div class="problem-num">Zero</div>
+        <div class="problem-desc">affordable, local-currency, offline-ready SaaS tools built for this exact niche</div>
+      </div>
+    </div>
+
+    <div style="width:100%;margin-top:20px;display:flex;flex-direction:column;gap:12px;">
+      <div class="quote-block">"I lose track of which staff processed which sale, and by end of month I can't reconcile my stock." — Typical Lagos tech shop owner</div>
+      <div class="two-col">
+        <div class="left">
+          <ul class="feature-list">
+            <li>
+              <div class="check-x"><svg viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="3.5" stroke-linecap="round"><use href="#ic-x"/></svg></div>
+              <span style="color:var(--muted)">No real-time stock alerts — items run out with no warning</span>
+            </li>
+            <li>
+              <div class="check-x"><svg viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="3.5" stroke-linecap="round"><use href="#ic-x"/></svg></div>
+              <span style="color:var(--muted)">No visibility into who owes money or supplier debt status</span>
+            </li>
+            <li>
+              <div class="check-x"><svg viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="3.5" stroke-linecap="round"><use href="#ic-x"/></svg></div>
+              <span style="color:var(--muted)">No way to track profit vs. expenses accurately</span>
+            </li>
+          </ul>
+        </div>
+        <div class="right">
+          <ul class="feature-list">
+            <li>
+              <div class="check-x"><svg viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="3.5" stroke-linecap="round"><use href="#ic-x"/></svg></div>
+              <span style="color:var(--muted)">No staff accountability — no audit trail of who did what</span>
+            </li>
+            <li>
+              <div class="check-x"><svg viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="3.5" stroke-linecap="round"><use href="#ic-x"/></svg></div>
+              <span style="color:var(--muted)">Generic ERP tools are too complex, too expensive, USD-priced</span>
+            </li>
+            <li>
+              <div class="check-x"><svg viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="3.5" stroke-linecap="round"><use href="#ic-x"/></svg></div>
+              <span style="color:var(--muted)">Existing tools break down when internet is unstable</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-num">02 / 12</div>
+  </div>
+
+  <!-- ═══════ SLIDE 3 — SOLUTION ═══════ -->
+  <div class="slide" id="slide-3">
+    <span class="slide-label">The Solution</span>
+    <h2 class="slide-title">TechStock — <span class="accent">One Platform. Total Control.</span></h2>
+    <div class="gradient-line"></div>
+
+    <div class="two-col">
+      <div class="left" style="display:flex;flex-direction:column;gap:14px;">
+        <p class="slide-subtitle">TechStock is a purpose-built, web-based SaaS that gives Nigerian tech retail businesses the same operational intelligence as enterprise retailers — at a price point that makes sense locally.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
+          <div class="traction-row">
+            <div class="traction-icon"><i data-lucide="package"></i></div>
+            <div class="traction-text"><strong>Full inventory &amp; sales operations</strong> in one unified dashboard with role-based access for admin and staff</div>
+          </div>
+          <div class="traction-row">
+            <div class="traction-icon"><i data-lucide="cpu"></i></div>
+            <div class="traction-text"><strong>Business intelligence built in</strong> — profit tracking, expense logs, debt management, and product-level margin analysis</div>
+          </div>
+          <div class="traction-row">
+            <div class="traction-icon"><i data-lucide="wifi"></i></div>
+            <div class="traction-text"><strong>Offline-first architecture</strong> — operations queue locally when offline and sync automatically when connection restores</div>
+          </div>
+          <div class="traction-row">
+            <div class="traction-icon"><i data-lucide="landmark"></i></div>
+            <div class="traction-text"><strong>Built for Nigeria</strong> — Naira (₦) by default, local business patterns in mind, and subscription pricing in NGN</div>
+          </div>
+        </div>
+      </div>
+      <div class="right" style="display:flex;flex-direction:column;gap:12px;">
+        <div class="card" style="padding:20px;">
+          <div style="font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent3);margin-bottom:12px;">Admin Panel</div>
+          <ul class="feature-list">
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Full CRUD for products, stock, orders, customers, suppliers</li>
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Live sales analytics &amp; revenue charts</li>
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Reports: Sales, Inventory, Customer, Financial</li>
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Create &amp; control staff accounts with granular permissions</li>
+          </ul>
+        </div>
+        <div class="card" style="padding:20px;">
+          <div style="font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;">Staff Dashboard</div>
+          <ul class="feature-list">
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Simplified, permission-scoped view of operations</li>
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Process sales, manage returns, view stock alerts</li>
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Full audit trail — every action attributed by name &amp; role</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-num">03 / 12</div>
+  </div>
+
+  <!-- ═══════ SLIDE 4 — CORE FEATURES ═══════ -->
+  <div class="slide" id="slide-4">
+    <span class="slide-label">Product</span>
+    <h2 class="slide-title">Core <span class="accent">Feature Modules</span></h2>
+    <div class="gradient-line"></div>
+
+    <div class="grid-4" style="margin-top:4px;">
+      <div class="card" style="padding:20px;">
+        <div class="icon-box blue"><i data-lucide="layout-dashboard"></i></div>
+        <div class="card-title">Smart Dashboard</div>
+        <div class="card-body">Live KPIs — revenue, low stock alerts, pending orders, top products. Sales trend charts with weekly/monthly/yearly toggles.</div>
+      </div>
+      <div class="card" style="padding:20px;">
+        <div class="icon-box green"><i data-lucide="archive"></i></div>
+        <div class="card-title">Product &amp; Stock</div>
+        <div class="card-body">Full product catalog with images, SKUs, categories &amp; brands. Real-time stock levels, restock alerts, and complete change history log.</div>
+      </div>
+      <div class="card" style="padding:20px;">
+        <div class="icon-box orange"><i data-lucide="shopping-cart"></i></div>
+        <div class="card-title">Sales &amp; Transactions</div>
+        <div class="card-body">Create orders, apply discounts (% or fixed), split payments (Cash/POS/Transfer), generate branded receipts, and manage returns.</div>
+      </div>
+      <div class="card" style="padding:20px;">
+        <div class="icon-box purple"><i data-lucide="users"></i></div>
+        <div class="card-title">Customers &amp; Suppliers</div>
+        <div class="card-body">VIP segmentation, growth analytics, purchase history. Supplier directory, delivery tracking, and purchase order system.</div>
+      </div>
+      <div class="card" style="padding:20px;">
+        <div class="icon-box red"><i data-lucide="file-bar-chart-2"></i></div>
+        <div class="card-title">Reports &amp; Analytics</div>
+        <div class="card-body">4 report types: Sales, Inventory, Customer, Financial. Revenue trend charts, category breakdown, product performance rankings.</div>
+      </div>
+      <div class="card" style="padding:20px;">
+        <div class="icon-box indigo"><i data-lucide="bell"></i></div>
+        <div class="card-title">Real-time Notifications</div>
+        <div class="card-body">Socket.io-powered low-stock alerts. Notification centre with unread badge. Admin configures threshold levels per product.</div>
+      </div>
+      <div class="card" style="padding:20px;">
+        <div class="icon-box blue"><i data-lucide="shield-check"></i></div>
+        <div class="card-title">Role-Based Access</div>
+        <div class="card-body">Admin generates staff credentials with one-time-use passwords. Granular permissions: edit products, manage stock, process sales, and more.</div>
+      </div>
+      <div class="card" style="padding:20px;">
+        <div class="icon-box green"><i data-lucide="search"></i></div>
+        <div class="card-title">Dark/Light Mode + Search</div>
+        <div class="card-body">Full dark &amp; light theme toggle. Global cross-entity search across products, orders, and customers — all from the header bar.</div>
+      </div>
+    </div>
+    <div class="slide-num">04 / 12</div>
+  </div>
+
+  <!-- ═══════ SLIDE 5 — EXTRA TOOLS ═══════ -->
+  <div class="slide" id="slide-5">
+    <span class="slide-label">Beyond Inventory</span>
+    <h2 class="slide-title">Extra Tools — <span class="accent">Built-in Business Suite</span></h2>
+    <div class="gradient-line"></div>
+    <p class="slide-subtitle" style="margin-bottom:24px;">TechStock ships with powerful add-on modules competitors charge separately for — giving business owners a complete financial operating system.</p>
+
+    <div class="grid-2" style="gap:20px;">
+      <div class="card" style="display:flex;gap:20px;align-items:flex-start;padding:28px;">
+        <div class="icon-box green" style="width:52px;height:52px;flex-shrink:0;margin-bottom:0;">
+          <i data-lucide="trending-up" style="width:24px;height:24px;stroke-width:1.75;stroke:#34d399;"></i>
+        </div>
+        <div>
+          <div class="card-title" style="font-size:17px;">Finance &amp; Profit Tracker</div>
+          <span class="badge badge-green" style="margin-bottom:10px;display:inline-block;">Live</span>
+          <ul class="feature-list" style="margin-top:8px;">
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Track Revenue, COGS, Gross &amp; Net Profit</li>
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Expense log with 7 categories (rent, salaries, marketing…)</li>
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Per-product profitability &amp; margin analysis</li>
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Cost Price Manager — set cost vs. realized selling price</li>
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Custom date range reporting (week/month/quarter/year)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card" style="display:flex;gap:20px;align-items:flex-start;padding:28px;">
+        <div class="icon-box orange" style="width:52px;height:52px;flex-shrink:0;margin-bottom:0;">
+          <i data-lucide="credit-card" style="width:24px;height:24px;stroke-width:1.75;stroke:#fbbf24;"></i>
+        </div>
+        <div>
+          <div class="card-title" style="font-size:17px;">Who Owe Me — Debt Tracker</div>
+          <span class="badge badge-gold" style="margin-bottom:10px;display:inline-block;">Live</span>
+          <ul class="feature-list" style="margin-top:8px;">
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Track receivables (customers who owe you) &amp; payables</li>
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Record partial payments with running balance</li>
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Due dates, overdue flags &amp; automated reminders</li>
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Condition notes (e.g. "5% interest after due date")</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card" style="display:flex;gap:20px;align-items:flex-start;padding:28px;opacity:0.65;">
+        <div class="icon-box blue" style="width:52px;height:52px;flex-shrink:0;margin-bottom:0;">
+          <i data-lucide="calculator" style="width:24px;height:24px;stroke-width:1.75;stroke:#60a5fa;"></i>
+        </div>
+        <div>
+          <div class="card-title" style="font-size:17px;">Tax Calculator</div>
+          <span class="badge badge-blue" style="margin-bottom:10px;display:inline-block;">Coming Soon</span>
+          <div class="card-body">Estimate VAT obligations &amp; generate tax-ready summaries for your accountant based on live sales data.</div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;gap:20px;align-items:flex-start;padding:28px;opacity:0.65;">
+        <div class="icon-box purple" style="width:52px;height:52px;flex-shrink:0;margin-bottom:0;">
+          <i data-lucide="clipboard-list" style="width:24px;height:24px;stroke-width:1.75;stroke:#a78bfa;"></i>
+        </div>
+        <div>
+          <div class="card-title" style="font-size:17px;">Payroll Manager</div>
+          <span class="badge badge-purple" style="margin-bottom:10px;display:inline-block;">Coming Soon</span>
+          <div class="card-body">Track staff salaries, compute payroll deductions, and maintain clean payment history per employee.</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-num">05 / 12</div>
+  </div>
+
+  <!-- ═══════ SLIDE 6 — TECH STACK ═══════ -->
+  <div class="slide" id="slide-6">
+    <span class="slide-label">Technology</span>
+    <h2 class="slide-title">Built on a <span class="accent">Modern, Scalable Stack</span></h2>
+    <div class="gradient-line"></div>
+
+    <div class="two-col" style="gap:48px;">
+      <div class="left" style="display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <span class="tech-tag"><i data-lucide="atom"></i> React 18 (Vite)</span>
+          <span class="tech-tag"><i data-lucide="server"></i> Node.js / Express 5</span>
+          <span class="tech-tag"><i data-lucide="database"></i> MongoDB / Mongoose</span>
+          <span class="tech-tag"><i data-lucide="key-round"></i> JWT Auth</span>
+          <span class="tech-tag"><i data-lucide="zap"></i> Socket.io</span>
+          <span class="tech-tag"><i data-lucide="hard-drive"></i> IndexedDB (Offline)</span>
+          <span class="tech-tag"><i data-lucide="image"></i> Multer (Image Upload)</span>
+          <span class="tech-tag"><i data-lucide="table-2"></i> CSV Import/Export</span>
+          <span class="tech-tag"><i data-lucide="cloud"></i> Vercel + Render</span>
+        </div>
+
+        <div class="hr"></div>
+
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="traction-row">
+            <div class="traction-icon"><i data-lucide="shield"></i></div>
+            <div class="traction-text"><strong>Security-first</strong> — bcrypt password hashing, JWT middleware, role-based route guards on every endpoint</div>
+          </div>
+          <div class="traction-row">
+            <div class="traction-icon"><i data-lucide="signal"></i></div>
+            <div class="traction-text"><strong>Offline-first PWA</strong> — IndexedDB queue replays failed requests automatically when connection restores</div>
+          </div>
+          <div class="traction-row">
+            <div class="traction-icon"><i data-lucide="radio"></i></div>
+            <div class="traction-text"><strong>Real-time</strong> — Socket.io delivers live low-stock alerts to all connected admin &amp; staff sessions</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right" style="display:flex;flex-direction:column;gap:16px;">
+        <div class="card" style="padding:20px;">
+          <div style="font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent3);margin-bottom:14px;">Architecture Highlights</div>
+          <ul class="feature-list">
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>13 backend data models (Products, Orders, Customers, Suppliers, Returns, Debts, Expenses, Notifications…)</li>
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>50+ REST API endpoints with filter, pagination &amp; export</li>
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Granular permission middleware on all protected routes</li>
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>CSV import/export via json2csv &amp; csv-parser</li>
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Seed script with realistic sample data for demos</li>
+            <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Dark &amp; light mode via CSS custom properties + React Context</li>
+          </ul>
+        </div>
+        <div class="card" style="padding:20px;">
+          <div style="font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Deployment</div>
+          <div class="card-body">Frontend on <strong style="color:var(--text)">Vercel</strong>, backend on <strong style="color:var(--text)">Render</strong> — both currently on free tiers during early traction phase. Production-grade infrastructure ready to upgrade on revenue.</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-num">06 / 12</div>
+  </div>
+
+  <!-- ═══════ SLIDE 7 — TRACTION ═══════ -->
+  <div class="slide" id="slide-7">
+    <span class="slide-label">Traction</span>
+    <h2 class="slide-title">Real Businesses, <span class="accent">Real Usage</span></h2>
+    <div class="gradient-line"></div>
+
+    <div class="two-col" style="gap:48px;">
+      <div class="left">
+        <div class="grid-2" style="gap:16px;">
+          <div class="card" style="padding:24px;text-align:center;">
+            <div class="stat-num" id="stat-businesses">0</div>
+            <div class="stat-label">Nigerian businesses onboarded</div>
+          </div>
+          <div class="card" style="padding:24px;text-align:center;">
+            <div class="stat-num">₦0</div>
+            <div class="stat-label">CAC — 100% organic referrals</div>
+          </div>
+          <div class="card" style="padding:24px;text-align:center;">
+            <div class="stat-num" id="stat-phases">0</div>
+            <div class="stat-label">of 4 build phases complete</div>
+          </div>
+          <div class="card" style="padding:24px;text-align:center;">
+            <div class="stat-num">95%+</div>
+            <div class="stat-label">feature completeness vs. plan</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right" style="display:flex;flex-direction:column;gap:14px;">
+        <div class="traction-row">
+          <div class="traction-icon"><i data-lucide="building-2"></i></div>
+          <div class="traction-text"><strong>7+ Lagos-based tech retailers</strong> are actively using TechStock for daily inventory &amp; sales operations — all onboarded organically, zero marketing spend</div>
+        </div>
+        <div class="traction-row">
+          <div class="traction-icon"><i data-lucide="handshake"></i></div>
+          <div class="traction-text"><strong>All 7+ businesses are payment-aware</strong> — they know a paid plan is coming post-launch. Zero churn since onboarding. Strong product-market fit signal.</div>
+        </div>
+        <div class="traction-row">
+          <div class="traction-icon"><i data-lucide="message-circle"></i></div>
+          <div class="traction-text"><strong>Feature requests are incoming</strong> — businesses are asking for payroll, tax tools, and mobile app — driving the roadmap directly</div>
+        </div>
+        <div class="traction-row">
+          <div class="traction-icon"><i data-lucide="activity"></i></div>
+          <div class="traction-text"><strong>Daily active usage</strong> — staff process sales, admins check dashboards, and low-stock alerts are being acted on in real time</div>
+        </div>
+        <div class="quote-block" style="margin-top:4px;">"We finally know exactly what's in stock and what's selling — before TechStock it was guesswork." — Early adopter, Ikeja Computer Village</div>
+      </div>
+    </div>
+    <div class="slide-num">07 / 12</div>
+  </div>
+
+  <!-- ═══════ SLIDE 8 — MARKET ═══════ -->
+  <div class="slide" id="slide-8">
+    <span class="slide-label">Market Opportunity</span>
+    <h2 class="slide-title">A Massive, <span class="accent">Underserved Market</span></h2>
+    <div class="gradient-line"></div>
+
+    <div class="two-col" style="gap:48px;">
+      <div class="left" style="display:flex;flex-direction:column;gap:16px;">
+        <div class="card" style="padding:24px;">
+          <div style="font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Addressable Market — Nigeria Alone</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><span style="color:var(--muted)">Tech retail SMEs (Tier 1 cities)</span><span style="font-weight:600;">~50,000+</span></div>
+              <div class="market-bar"><div class="market-bar-fill" style="width:0%" data-target="85%"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><span style="color:var(--muted)">General retail SMEs (all categories)</span><span style="font-weight:600;">~500,000+</span></div>
+              <div class="market-bar"><div class="market-bar-fill" style="width:0%" data-target="65%"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><span style="color:var(--muted)">West African expansion TAM</span><span style="font-weight:600;">~2,000,000+</span></div>
+              <div class="market-bar"><div class="market-bar-fill" style="width:0%" data-target="40%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="padding:20px;">
+          <div style="font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent3);margin-bottom:10px;">Competitive Landscape</div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span>TradeDepot / Bumpa / Pastel</span><span class="badge badge-blue">General retail</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span>SAP / QuickBooks / Zoho</span><span class="badge badge-purple">Enterprise, USD-priced</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-weight:700;color:var(--accent3);"><span>TechStock</span><span class="badge badge-green">Niche-specific ✓</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right" style="display:flex;flex-direction:column;gap:14px;">
+        <div class="why-item">
+          <div class="why-num">01</div>
+          <div>
+            <div style="font-weight:700;margin-bottom:4px;">Tech retail is Nigeria's fastest-growing informal sector</div>
+            <div class="card-body">Computer Village (Lagos) alone has 5,000+ registered stalls. Abuja, PH, Kano follow closely. These operators desperately need affordable digital tools.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-num">02</div>
+          <div>
+            <div style="font-weight:700;margin-bottom:4px;">Nigeria's SaaS market is projected to hit $1B+ by 2027</div>
+            <div class="card-body">B2B SaaS adoption among Nigerian SMEs is accelerating post-COVID. Mobile-first infrastructure and fintech adoption pave the way.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-num">03</div>
+          <div>
+            <div style="font-weight:700;margin-bottom:4px;">No direct competitor owns this exact niche</div>
+            <div class="card-body">Existing tools are either too generic, USD-priced, or require enterprise-level implementation. TechStock is the first purpose-built solution.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-num">08 / 12</div>
+  </div>
+
+  <!-- ═══════ SLIDE 9 — BUSINESS MODEL ═══════ -->
+  <div class="slide" id="slide-9">
+    <span class="slide-label">Business Model</span>
+    <h2 class="slide-title">Subscription SaaS — <span class="accent">Priced for Nigeria</span></h2>
+    <div class="gradient-line"></div>
+
+    <div style="width:100%;display:flex;gap:20px;margin-bottom:16px;">
+      <div class="pricing-card" style="flex:1;">
+        <div class="badge badge-blue" style="margin-bottom:4px;">Starter</div>
+        <div class="pricing-price"><sup>₦</sup>7,500</div>
+        <div class="pricing-period">per month</div>
+        <div class="hr"></div>
+        <ul class="pricing-features">
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>1 Admin + up to 2 Staff</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Product &amp; Stock Management</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Sales &amp; Receipts</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Customer Directory</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Basic Dashboard</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Email Support</li>
+        </ul>
+        <div style="margin-top:auto;padding-top:16px;font-size:12px;color:var(--muted);">≈ $5/mo · Best for solo shops</div>
+      </div>
+
+      <div class="pricing-card featured" style="flex:1;">
+        <div class="badge badge-green" style="margin-bottom:4px;">Pro · Popular</div>
+        <div class="pricing-price"><sup>₦</sup>19,500</div>
+        <div class="pricing-period">per month</div>
+        <div class="hr"></div>
+        <ul class="pricing-features">
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>1 Admin + up to 5 Staff</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Everything in Starter</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Supplier &amp; Purchase Orders</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Reports &amp; Analytics</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Finance &amp; Profit Tracker</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Debt Tracker</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Real-time Notifications</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>CSV Export / Import</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Priority Support</li>
+        </ul>
+        <div style="margin-top:auto;padding-top:16px;font-size:12px;color:var(--muted);">≈ $13/mo · Best for growing stores</div>
+      </div>
+
+      <div class="pricing-card" style="flex:1;">
+        <div class="badge badge-purple" style="margin-bottom:4px;">Business</div>
+        <div class="pricing-price"><sup>₦</sup>39,000</div>
+        <div class="pricing-period">per month</div>
+        <div class="hr"></div>
+        <ul class="pricing-features">
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>1 Admin + Unlimited Staff</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Everything in Pro</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Payroll Manager (on launch)</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Tax Calculator (on launch)</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Multi-branch support (roadmap)</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Custom branding on receipts</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>Dedicated Account Manager</li>
+          <li><span class="pf-check"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="8" height="8"><polyline points="20 6 9 17 4 12"></polyline></svg></span>SLA-backed uptime</li>
+        </ul>
+        <div style="margin-top:auto;padding-top:16px;font-size:12px;color:var(--muted);">≈ $26/mo · Best for multi-staff ops</div>
+      </div>
+    </div>
+
+    <div style="width:100%;display:flex;gap:16px;">
+      <div class="card" style="flex:1;padding:16px;text-align:center;">
+        <div style="font-size:13px;color:var(--muted);">Billing Options</div>
+        <div style="font-weight:700;margin-top:4px;">Monthly · Bi-Annual · Annual</div>
+        <div style="font-size:12px;color:var(--accent3);margin-top:2px;">Up to 20% off on annual plans</div>
+      </div>
+      <div class="card" style="flex:1;padding:16px;text-align:center;">
+        <div style="font-size:13px;color:var(--muted);">Revenue Projection (Year 1)</div>
+        <div style="font-weight:700;margin-top:4px;">₦2.8M+ ARR</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px;">Based on 120 Pro subscribers</div>
+      </div>
+      <div class="card" style="flex:1;padding:16px;text-align:center;">
+        <div style="font-size:13px;color:var(--muted);">Current Paying Customers</div>
+        <div style="font-weight:700;margin-top:4px;">7+ On Free (Pre-revenue)</div>
+        <div style="font-size:12px;color:var(--accent3);margin-top:2px;">Payment transition planned at launch</div>
+      </div>
+    </div>
+    <div class="slide-num">09 / 12</div>
+  </div>
+
+  <!-- ═══════ SLIDE 10 — ROADMAP ═══════ -->
+  <div class="slide" id="slide-10">
+    <span class="slide-label">Roadmap</span>
+    <h2 class="slide-title">Where We Are &amp; <span class="accent">Where We're Going</span></h2>
+    <div class="gradient-line"></div>
+
+    <div class="roadmap-track" style="margin-bottom:32px;">
+      <div class="roadmap-item">
+        <div class="roadmap-dot done">
+          <!-- check icon inline -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <div class="roadmap-label">Phase 1 — MVP</div>
+        <div class="roadmap-sub">Auth, Dashboard, Products, Stock, Sales &amp; Transactions</div>
+        <span class="badge badge-green" style="margin-top:8px;display:inline-block;">Complete</span>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-dot done">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <div class="roadmap-label">Phase 2 — Extended Admin</div>
+        <div class="roadmap-sub">Customers, Suppliers, Purchase Orders, Reports, CSV Export/Import</div>
+        <span class="badge badge-green" style="margin-top:8px;display:inline-block;">Complete</span>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-dot done">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <div class="roadmap-label">Phase 3 — Staff &amp; Settings</div>
+        <div class="roadmap-sub">User management, staff login, permissions, returns, finance &amp; debt trackers</div>
+        <span class="badge badge-green" style="margin-top:8px;display:inline-block;">~95% Done</span>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-dot active">
+          <!-- play icon -->
+          <svg viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+        </div>
+        <div class="roadmap-label">Phase 4 — Polish &amp; Launch</div>
+        <div class="roadmap-sub">Mobile responsive polish, deployment configs, automated tests</div>
+        <span class="badge badge-blue" style="margin-top:8px;display:inline-block;">~80% Done</span>
+      </div>
+    </div>
+
+    <div class="grid-3" style="gap:16px;">
+      <div class="card" style="padding:20px;">
+        <div class="badge badge-gold" style="margin-bottom:12px;display:inline-block;">Q3 2026</div>
+        <div class="card-title">Public Launch</div>
+        <ul class="feature-list" style="margin-top:8px;">
+          <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Full deployment on Vercel + Render</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Payment integration (Paystack)</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Convert 7+ free users to paid plans</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Landing page + onboarding flow</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:20px;">
+        <div class="badge badge-purple" style="margin-bottom:12px;display:inline-block;">Q4 2026</div>
+        <div class="card-title">Growth Features</div>
+        <ul class="feature-list" style="margin-top:8px;">
+          <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Payroll Manager (full launch)</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Tax Calculator (VAT estimation)</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Mobile PWA install support</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Referral program</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:20px;">
+        <div class="badge badge-blue" style="margin-bottom:12px;display:inline-block;">2027</div>
+        <div class="card-title">Scale &amp; Expand</div>
+        <ul class="feature-list" style="margin-top:8px;">
+          <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Multi-branch / multi-location support</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Ghana &amp; Kenya market entry</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>Native Android/iOS app</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>AI-powered restocking recommendations</li>
+        </ul>
+      </div>
+    </div>
+    <div class="slide-num">10 / 12</div>
+  </div>
+
+  <!-- ═══════ SLIDE 11 — WHY NOW / WHY US ═══════ -->
+  <div class="slide" id="slide-11">
+    <span class="slide-label">Our Edge</span>
+    <h2 class="slide-title">Why <span class="accent">TechStock</span>, Why <span class="accent">Now</span></h2>
+    <div class="gradient-line"></div>
+
+    <div class="two-col" style="gap:40px;">
+      <div class="left" style="display:flex;flex-direction:column;gap:14px;">
+        <div class="why-item">
+          <div class="why-num">01</div>
+          <div>
+            <div style="font-weight:700;margin-bottom:4px;">Domain-specific, not generic</div>
+            <div class="card-body">Built from the ground up for tech retail — our data models, workflows, and terminology match how these businesses actually operate. No configuration overhead.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-num">02</div>
+          <div>
+            <div style="font-weight:700;margin-bottom:4px;">Offline-first for Nigerian infrastructure</div>
+            <div class="card-body">We engineered around Nigeria's intermittent internet. IndexedDB queues operations offline and syncs automatically — competitors assume stable connectivity.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-num">03</div>
+          <div>
+            <div style="font-weight:700;margin-bottom:4px;">Finance intelligence included at no extra cost</div>
+            <div class="card-body">Profit tracker, debt manager, expense categorization, and per-product margin analysis — tools competitors charge add-on prices for are core features in TechStock.</div>
+          </div>
+        </div>
+      </div>
+      <div class="right" style="display:flex;flex-direction:column;gap:14px;">
+        <div class="why-item">
+          <div class="why-num">04</div>
+          <div>
+            <div style="font-weight:700;margin-bottom:4px;">Proven traction before a single naira of marketing</div>
+            <div class="card-body">7+ businesses adopted TechStock purely through word of mouth. Zero paid acquisition. This is the strongest signal of genuine product-market fit.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-num">05</div>
+          <div>
+            <div style="font-weight:700;margin-bottom:4px;">Full-stack, production-grade codebase</div>
+            <div class="card-body">The product is not a prototype. It has 13 data models, 50+ API endpoints, real-time notifications, offline sync, role-based auth, and receipts — all functional today.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-num">06</div>
+          <div>
+            <div style="font-weight:700;margin-bottom:4px;">Timing: Nigeria's digital SME moment</div>
+            <div class="card-body">Post-2024 Naira devaluation accelerated SME demand for local-currency, locally-relevant SaaS. The window to become the default platform is now.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-num">11 / 12</div>
+  </div>
+
+  <!-- ═══════ SLIDE 12 — CTA ═══════ -->
+  <div class="slide" id="slide-12" style="text-align:center;">
+    <div class="logo-mark" style="margin-bottom:24px;">
+      <div class="logo-icon">
+        <i data-lucide="package"></i>
+      </div>
+      TechStock
+    </div>
+    <h2 class="slide-title" style="font-size:clamp(28px,5vw,52px);max-width:700px;">Ready to Back the Platform<br/>That Nigerian Retail <span class="accent">Deserves</span></h2>
+    <div class="gradient-line" style="margin:20px auto;"></div>
+    <p class="slide-subtitle" style="max-width:560px;text-align:center;">We are raising to accelerate product polish, payment infrastructure, customer acquisition, and the full public launch. Join us at the ground floor of Nigeria's premier retail SaaS.</p>
+
+    <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:24px;">
+      <div class="card" style="padding:20px 28px;text-align:center;min-width:160px;">
+        <div class="stat-num" style="font-size:36px;">7+</div>
+        <div class="stat-label">Live Businesses</div>
+      </div>
+      <div class="card" style="padding:20px 28px;text-align:center;min-width:160px;">
+        <div class="stat-num" style="font-size:36px;">95%</div>
+        <div class="stat-label">Feature Complete</div>
+      </div>
+      <div class="card" style="padding:20px 28px;text-align:center;min-width:160px;">
+        <div class="stat-num" style="font-size:36px;">₦0</div>
+        <div class="stat-label">CAC to Date</div>
+      </div>
+      <div class="card" style="padding:20px 28px;text-align:center;min-width:160px;">
+        <div class="stat-num" style="font-size:36px;">∞</div>
+        <div class="stat-label">TAM Headroom</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:16px;justify-content:center;margin-top:28px;flex-wrap:wrap;">
+      <button class="cta-btn" onclick="alert('Reach out to the TechStock team to schedule a live demo!')">
+        <i data-lucide="calendar"></i>
+        Request a Live Demo
+      </button>
+      <button class="cta-btn-outline" onclick="alert('Investment deck and data room available on request.')">
+        <i data-lucide="file-text"></i>
+        View Full Data Room
+      </button>
+    </div>
+
+    <p style="margin-top:28px;font-size:13px;color:var(--muted);">Built with care in Nigeria · <strong style="color:var(--text)">TechStock</strong> · Inventory &amp; Sales Intelligence for Tech Retail</p>
+    <div class="slide-num">12 / 12</div>
+  </div>
+
+</div>
+
+<!-- Controls -->
+<div id="controls">
+  <button id="btn-prev" title="Previous (←)">&#8249;</button>
+  <span id="slide-counter">1 / 12</span>
+  <button id="btn-next" title="Next (→)">&#8250;</button>
+</div>
+
+<script>
+  const TOTAL = 12;
+  let current = 1;
+  let isAnimating = false;
+
+  const progressBar = document.getElementById('progress-bar');
+  const counter     = document.getElementById('slide-counter');
+
+  // Build nav dots
+  const dotsContainer = document.getElementById('nav-dots');
+  for (let i = 1; i <= TOTAL; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'dot' + (i === 1 ? ' active' : '');
+    btn.title = `Slide ${i}`;
+    btn.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(btn);
+  }
+
+  function updateUI() {
+    progressBar.style.width = ((current / TOTAL) * 100) + '%';
+    counter.textContent = current + ' / ' + TOTAL;
+    document.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i + 1 === current);
+    });
+  }
+
+  function goTo(n, dir = 1) {
+    if (isAnimating || n === current || n < 1 || n > TOTAL) return;
+    isAnimating = true;
+
+    const prev = document.getElementById('slide-' + current);
+    const next = document.getElementById('slide-' + n);
+
+    prev.classList.remove('active');
+    prev.classList.add('exit');
+
+    next.style.transform = dir > 0 ? 'translateX(60px)' : 'translateX(-60px)';
+    next.style.opacity = '0';
+    next.style.pointerEvents = 'none';
+
+    void next.offsetHeight;
+
+    next.style.transition = 'opacity 0.55s cubic-bezier(0.4,0,0.2,1), transform 0.55s cubic-bezier(0.4,0,0.2,1)';
+    next.style.transform = 'translateX(0)';
+    next.style.opacity = '1';
+    next.classList.add('active');
+
+    setTimeout(() => {
+      prev.classList.remove('exit');
+      prev.style.transform = '';
+      prev.style.opacity = '';
+      prev.style.transition = '';
+      next.style.pointerEvents = '';
+      current = n;
+      updateUI();
+      isAnimating = false;
+      onSlideEnter(current);
+    }, 580);
+  }
+
+  function next() { goTo(current + 1, 1); }
+  function prev() { goTo(current - 1, -1); }
+
+  document.getElementById('btn-next').addEventListener('click', next);
+  document.getElementById('btn-prev').addEventListener('click', prev);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next();
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   prev();
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend',   e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 60) { dx < 0 ? next() : prev(); }
+  });
+
+  function onSlideEnter(n) {
+    if (n === 7) animateCounters();
+    if (n === 8) animateMarketBars();
+  }
+
+  function animateCounters() {
+    animateNum('stat-businesses', 0, 7, 800, '', '+');
+    animateNum('stat-phases',     0, 3, 900, '', '/4');
+  }
+  function animateNum(id, from, to, dur, prefix, suffix) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const start = performance.now();
+    function step(ts) {
+      const p = Math.min((ts - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = prefix + Math.round(from + (to - from) * ease) + (suffix || '');
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function animateMarketBars() {
+    document.querySelectorAll('.market-bar-fill').forEach(bar => {
+      const target = bar.dataset.target || '50%';
+      setTimeout(() => { bar.style.width = target; }, 100);
+    });
+  }
+
+  // Init
+  document.getElementById('slide-1').classList.add('active');
+  updateUI();
+
+  // Render Lucide icons
+  if (window.lucide) {
+    lucide.createIcons();
+  }
+</script>
+</body>
+</html>
